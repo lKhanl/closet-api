@@ -1,0 +1,9 @@
+version: '3.7'
+services:
+  closet-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - '2000:8080'
