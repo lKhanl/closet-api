@@ -28,13 +28,16 @@ public class Shoes {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "path")
     private String path;
+
+    @Column(name = "user_id")
+    private Integer userId;
 
     @CreationTimestamp
     @Column(name = "created_at")

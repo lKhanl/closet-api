@@ -1,22 +1,35 @@
 package dev.oguzhanercelik.controller;
 
-import dev.oguzhanercelik.entity.User;
-import dev.oguzhanercelik.service.UserService;
+import dev.oguzhanercelik.model.PagingResult;
+import dev.oguzhanercelik.model.dto.TopDto;
+import dev.oguzhanercelik.model.request.TopCreateRequest;
+import dev.oguzhanercelik.model.request.TopFilterRequest;
+import dev.oguzhanercelik.service.TopService;
+import dev.oguzhanercelik.utils.IdentityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/tops")
 @RequiredArgsConstructor
 public class TopController {
 
-    private final UserService userService;
+    private final TopService topService;
 
     @PostMapping
-    public void createTop() {
-        final User user = userService.find();
+    public void createTop(@RequestBody @Valid TopCreateRequest request) {
+        topService.create(IdentityUtils.getId(), request);
+    }
+
+    @GetMapping
+    public PagingResult<TopDto> getAllByFilterTop(@Valid TopFilterRequest request) {
+        return topService.getAllByFilterTop(IdentityUtils.getId(), request);
     }
 
 }

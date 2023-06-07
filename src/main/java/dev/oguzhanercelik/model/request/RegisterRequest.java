@@ -18,11 +18,14 @@ public class RegisterRequest {
 
     @NotBlank(message = "registerRequest.firstName.notBlank")
     private String firstName;
+
     @NotBlank(message = "registerRequest.lastName.notBlank")
     private String lastName;
+
     @NotBlank(message = "registerRequest.email.notBlank")
     @Email(message = "registerRequest.email.pattern")
     private String email;
+
     @NotBlank(message = "registerRequest.password.notBlank")
     private String password;
 

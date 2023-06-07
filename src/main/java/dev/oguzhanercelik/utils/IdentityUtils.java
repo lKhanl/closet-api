@@ -14,4 +14,8 @@ public class IdentityUtils {
         return userAuthentication.getDetails();
     }
 
+    public static Integer getId() {
+        return getUser().getId();
+    }
+
 }

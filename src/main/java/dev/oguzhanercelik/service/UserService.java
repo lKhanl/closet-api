@@ -1,6 +1,5 @@
 package dev.oguzhanercelik.service;
 
-import dev.oguzhanercelik.config.MdcConstant;
 import dev.oguzhanercelik.converter.UserConverter;
 import dev.oguzhanercelik.entity.User;
 import dev.oguzhanercelik.exception.ApiException;
@@ -10,7 +9,6 @@ import dev.oguzhanercelik.model.error.ErrorEnum;
 import dev.oguzhanercelik.repository.UserRepository;
 import dev.oguzhanercelik.utils.IdentityUtils;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.MDC;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
