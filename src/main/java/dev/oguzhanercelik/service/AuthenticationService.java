@@ -57,7 +57,7 @@ public class AuthenticationService {
 
         // check if user is active
 
-        final String token = tokenService.createToken(userConverter.toDto(user.get()));
+        final String token = tokenService.createToken(userConverter.convertAsDto(user.get()));
         return new AuthenticationResponse(token);
     }
 
@@ -70,7 +70,7 @@ public class AuthenticationService {
     public void register(RegisterRequest registerRequest) {
         userService.checkEmailIfExist(registerRequest.getEmail());
         registerRequest.setPassword(passwordEncoder.bCryptPasswordEncoder().encode(registerRequest.getPassword()));
-        final User user = userConverter.toEntity(registerRequest);
+        final User user = userConverter.convertAsEntity(registerRequest);
         userService.save(user);
 
         // send email to user

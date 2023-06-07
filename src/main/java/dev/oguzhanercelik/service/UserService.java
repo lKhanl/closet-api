@@ -1,12 +1,16 @@
 package dev.oguzhanercelik.service;
 
+import dev.oguzhanercelik.config.MdcConstant;
 import dev.oguzhanercelik.converter.UserConverter;
 import dev.oguzhanercelik.entity.User;
 import dev.oguzhanercelik.exception.ApiException;
+import dev.oguzhanercelik.model.IdentityUser;
 import dev.oguzhanercelik.model.dto.UserDto;
 import dev.oguzhanercelik.model.error.ErrorEnum;
 import dev.oguzhanercelik.repository.UserRepository;
+import dev.oguzhanercelik.utils.IdentityUtils;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.MDC;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -27,14 +31,19 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public UserDto getUserInfo(Long uid) {
+    public UserDto getUserInfo(Integer uid) {
         final User merchantUser = userRepository.findById(uid)
                 .orElseThrow(() -> new ApiException(ErrorEnum.USER_NOT_FOUND));
-        return userConverter.toDto(merchantUser);
+        return userConverter.convertAsDto(merchantUser);
     }
 
-    public User save(User user) {
-        return userRepository.save(user);
+    public User find() {
+        final IdentityUser identityUser = IdentityUtils.getUser();
+        return userRepository.findById(identityUser.getId()).orElseThrow(() -> new ApiException(ErrorEnum.USER_NOT_FOUND));
+    }
+
+    public void save(User user) {
+        userRepository.save(user);
     }
 
     public Optional<User> findByEmail(String username) {

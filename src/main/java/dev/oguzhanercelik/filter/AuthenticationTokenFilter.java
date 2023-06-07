@@ -38,7 +38,6 @@ public class AuthenticationTokenFilter extends GenericFilterBean {
         try {
             Authentication userAuthentication = authenticationService.getUserAuthentication(httpRequest);
             SecurityContextHolder.getContext().setAuthentication(userAuthentication);
-            MDC.put(X_USER_ID, IdentityUtils.getUser().getId());
         } catch (AuthenticationFailedException e) {
             handleSecurityError((HttpServletResponse) servletResponse, "Authentication header not valid.");
             return;

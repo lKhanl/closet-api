@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class IdentityUser {
 
-    private String id;
+    private Integer id;
     private String email;
 
 }

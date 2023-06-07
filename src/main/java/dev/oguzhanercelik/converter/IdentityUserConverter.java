@@ -5,12 +5,14 @@ import io.jsonwebtoken.Claims;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component
 public class IdentityUserConverter {
 
     public IdentityUser getUser(Claims claims) {
         return IdentityUser.builder()
-                .id(getStringValue(claims, "id"))
+                .id(Integer.valueOf(Objects.requireNonNull(getStringValue(claims, "id"))))
                 .email(getStringValue(claims, "email"))
                 .build();
     }

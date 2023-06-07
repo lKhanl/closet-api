@@ -13,7 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 public class UserDto {
 
-    private Long id;
+    private Integer id;
     private String firstName;
     private String lastName;
     private String email;

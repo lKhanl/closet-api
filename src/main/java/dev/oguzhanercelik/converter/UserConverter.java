@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserConverter {
 
-    public User toEntity(RegisterRequest request) {
+    public User convertAsEntity(RegisterRequest request) {
         return User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -17,7 +17,7 @@ public class UserConverter {
                 .build();
     }
 
-    public UserDto toDto(User user) {
+    public UserDto convertAsDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
                 .firstName(user.getFirstName())
