@@ -2,10 +2,14 @@ package dev.oguzhanercelik.service;
 
 import dev.oguzhanercelik.converter.BottomConverter;
 import dev.oguzhanercelik.entity.Bottom;
+import dev.oguzhanercelik.entity.Top;
+import dev.oguzhanercelik.exception.ApiException;
 import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.BottomDto;
+import dev.oguzhanercelik.model.error.ErrorEnum;
 import dev.oguzhanercelik.model.request.BottomCreateRequest;
 import dev.oguzhanercelik.model.request.BottomFilterRequest;
+import dev.oguzhanercelik.model.request.BottomUpdateRequest;
 import dev.oguzhanercelik.repository.BottomRepository;
 import dev.oguzhanercelik.repository.BottomSpecification;
 import dev.oguzhanercelik.utils.PaginationUtils;
@@ -16,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -42,5 +47,15 @@ public class BottomService {
                                   bottomPage.getSize(),
                                   bottomPage.getNumber(),
                                   bottomPage.isEmpty());
+    }
+
+    public void update(Integer id, Integer userId, BottomUpdateRequest request) {
+        final Optional<Bottom> optionalBottom = bottomRepository.findByIdAndUserId(id, userId);
+        if (optionalBottom.isEmpty()) {
+            throw new ApiException(ErrorEnum.VALIDATION_ERROR);
+        }
+        final Bottom bottom = optionalBottom.get();
+        bottom.setName(request.getName());
+        bottomRepository.save(bottom);
     }
 }

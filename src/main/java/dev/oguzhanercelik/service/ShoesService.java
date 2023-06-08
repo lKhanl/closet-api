@@ -2,13 +2,15 @@ package dev.oguzhanercelik.service;
 
 import dev.oguzhanercelik.converter.ShoesConverter;
 import dev.oguzhanercelik.entity.Shoes;
-import dev.oguzhanercelik.entity.Shoes;
+import dev.oguzhanercelik.exception.ApiException;
 import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.ShoesDto;
-import dev.oguzhanercelik.model.request.ShoesFilterRequest;
+import dev.oguzhanercelik.model.error.ErrorEnum;
 import dev.oguzhanercelik.model.request.ShoesCreateRequest;
-import dev.oguzhanercelik.repository.ShoesSpecification;
+import dev.oguzhanercelik.model.request.ShoesFilterRequest;
+import dev.oguzhanercelik.model.request.ShoesUpdateRequest;
 import dev.oguzhanercelik.repository.ShoesRepository;
+import dev.oguzhanercelik.repository.ShoesSpecification;
 import dev.oguzhanercelik.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -43,5 +46,15 @@ public class ShoesService {
                                   shoesPage.getSize(),
                                   shoesPage.getNumber(),
                                   shoesPage.isEmpty());
+    }
+
+    public void update(Integer id, Integer userId, ShoesUpdateRequest request) {
+        final Optional<Shoes> optionalShoes = shoesRepository.findByIdAndUserId(id, userId);
+        if (optionalShoes.isEmpty()) {
+            throw new ApiException(ErrorEnum.VALIDATION_ERROR);
+        }
+        final Shoes shoes = optionalShoes.get();
+        shoes.setName(request.getName());
+        shoesRepository.save(shoes);
     }
 }
