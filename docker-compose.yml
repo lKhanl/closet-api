@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  closet-api:
+  my-combinations-api:
     build:
       context: .
       dockerfile: Dockerfile

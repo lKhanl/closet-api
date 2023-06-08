@@ -7,10 +7,10 @@ import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
 @SpringBootApplication
-public class ClosetApiApplication {
+public class MyCombinationsApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(ClosetApiApplication.class, args);
+        SpringApplication.run(MyCombinationsApplication.class, args);
     }
 
     @PostConstruct
