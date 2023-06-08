@@ -8,13 +8,17 @@ import dev.oguzhanercelik.model.request.BottomUpdateRequest;
 import dev.oguzhanercelik.service.BottomService;
 import dev.oguzhanercelik.utils.IdentityUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
@@ -38,5 +42,15 @@ public class BottomController {
     @PutMapping("/{id}")
     public void updateBottom(@RequestBody @Valid BottomUpdateRequest request, @PathVariable Integer id) {
         bottomService.update(id, IdentityUtils.getId(), request);
+    }
+
+    @PostMapping(value = "/{bottomId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void uploadImage(@RequestPart MultipartFile file, @PathVariable Integer bottomId) {
+        bottomService.uploadImage(bottomId, IdentityUtils.getId(), file);
+    }
+
+    @DeleteMapping(value = "/{bottomId}/image")
+    public void deleteImage(@PathVariable Integer bottomId) {
+        bottomService.deleteImage(bottomId, IdentityUtils.getId());
     }
 }
