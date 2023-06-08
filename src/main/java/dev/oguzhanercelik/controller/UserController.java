@@ -1,10 +1,9 @@
 package dev.oguzhanercelik.controller;
 
-import dev.oguzhanercelik.config.MdcConstant;
 import dev.oguzhanercelik.model.dto.UserDto;
 import dev.oguzhanercelik.service.UserService;
+import dev.oguzhanercelik.utils.IdentityUtils;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.MDC;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +17,7 @@ public class UserController {
 
     @GetMapping
     public UserDto getProfile() {
-        return userService.getUserInfo(Integer.valueOf(MDC.get(MdcConstant.X_USER_ID)));
+        return userService.getUserInfo(IdentityUtils.getId());
     }
 
 }
