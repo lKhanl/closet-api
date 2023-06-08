@@ -51,7 +51,7 @@ public class TopService {
     public void update(Integer id, Integer userId, TopUpdateRequest request) {
         final Optional<Top> optionalTop = topRepository.findByIdAndUserId(id, userId);
         if (optionalTop.isEmpty()) {
-            throw new ApiException(ErrorEnum.VALIDATION_ERROR);
+            throw new ApiException(ErrorEnum.TOP_NOT_FOUND);
         }
         final Top top = optionalTop.get();
         top.setName(request.getName());

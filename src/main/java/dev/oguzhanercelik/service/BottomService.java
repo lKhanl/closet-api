@@ -52,7 +52,7 @@ public class BottomService {
     public void update(Integer id, Integer userId, BottomUpdateRequest request) {
         final Optional<Bottom> optionalBottom = bottomRepository.findByIdAndUserId(id, userId);
         if (optionalBottom.isEmpty()) {
-            throw new ApiException(ErrorEnum.VALIDATION_ERROR);
+            throw new ApiException(ErrorEnum.BOTTOM_NOT_FOUND);
         }
         final Bottom bottom = optionalBottom.get();
         bottom.setName(request.getName());

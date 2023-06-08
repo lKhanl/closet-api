@@ -51,7 +51,7 @@ public class ShoesService {
     public void update(Integer id, Integer userId, ShoesUpdateRequest request) {
         final Optional<Shoes> optionalShoes = shoesRepository.findByIdAndUserId(id, userId);
         if (optionalShoes.isEmpty()) {
-            throw new ApiException(ErrorEnum.VALIDATION_ERROR);
+            throw new ApiException(ErrorEnum.SHOES_NOT_FOUND);
         }
         final Shoes shoes = optionalShoes.get();
         shoes.setName(request.getName());
