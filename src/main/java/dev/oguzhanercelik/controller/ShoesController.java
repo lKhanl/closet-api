@@ -2,6 +2,7 @@ package dev.oguzhanercelik.controller;
 
 import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.ShoesDto;
+import dev.oguzhanercelik.model.dto.TopDto;
 import dev.oguzhanercelik.model.request.ShoesCreateRequest;
 import dev.oguzhanercelik.model.request.ShoesFilterRequest;
 import dev.oguzhanercelik.model.request.ShoesUpdateRequest;
@@ -37,6 +38,11 @@ public class ShoesController {
     @GetMapping
     public PagingResult<ShoesDto> getAllByFilterShoes(@Valid ShoesFilterRequest request) {
         return shoesService.getAllByFilterShoes(IdentityUtils.getId(), request);
+    }
+
+    @GetMapping("/{id}")
+    public ShoesDto getShoesById(@PathVariable Integer id) {
+        return shoesService.getShoesById(id, IdentityUtils.getId());
     }
 
     @PutMapping("/{id}")

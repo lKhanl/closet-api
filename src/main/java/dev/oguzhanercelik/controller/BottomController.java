@@ -39,6 +39,11 @@ public class BottomController {
         return bottomService.getAllByFilterBottom(IdentityUtils.getId(), request);
     }
 
+    @GetMapping("/{id}")
+    public BottomDto getBottomById(@PathVariable Integer id) {
+        return bottomService.getBottomById(id, IdentityUtils.getId());
+    }
+
     @PutMapping("/{id}")
     public void updateBottom(@RequestBody @Valid BottomUpdateRequest request, @PathVariable Integer id) {
         bottomService.update(id, IdentityUtils.getId(), request);

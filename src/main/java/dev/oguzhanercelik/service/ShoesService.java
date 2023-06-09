@@ -91,4 +91,10 @@ public class ShoesService {
         shoes.setPath(null);
         shoesRepository.save(shoes);
     }
+
+    public ShoesDto getShoesById(Integer id, Integer userId) {
+        return shoesRepository.findByIdAndUserId(id,userId)
+                .map(shoesConverter::convertAsDto)
+                .orElseThrow(() -> new ApiException(ErrorEnum.SHOES_NOT_FOUND));
+    }
 }

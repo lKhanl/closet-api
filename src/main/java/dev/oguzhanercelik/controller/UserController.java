@@ -15,7 +15,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
+    @GetMapping("/profile")
     public UserDto getProfile() {
         return userService.getUserInfo(IdentityUtils.getId());
     }

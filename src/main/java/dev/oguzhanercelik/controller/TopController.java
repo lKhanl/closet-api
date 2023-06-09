@@ -39,6 +39,11 @@ public class TopController {
         return topService.getAllByFilterTop(IdentityUtils.getId(), request);
     }
 
+    @GetMapping("/{id}")
+    public TopDto getTopById(@PathVariable Integer id) {
+        return topService.getTopById(id, IdentityUtils.getId());
+    }
+
     @PutMapping("/{id}")
     public void updateTop(@RequestBody @Valid TopUpdateRequest request, @PathVariable Integer id) {
         topService.update(id, IdentityUtils.getId(), request);

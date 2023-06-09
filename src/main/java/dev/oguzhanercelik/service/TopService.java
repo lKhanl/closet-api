@@ -92,4 +92,10 @@ public class TopService {
         top.setPath(null);
         topRepository.save(top);
     }
+
+    public TopDto getTopById(Integer id, Integer userId) {
+        return topRepository.findByIdAndUserId(id,userId)
+                .map(topConverter::convertAsDto)
+                .orElseThrow(() -> new ApiException(ErrorEnum.TOP_NOT_FOUND));
+    }
 }

@@ -91,4 +91,10 @@ public class BottomService {
         bottom.setPath(null);
         bottomRepository.save(bottom);
     }
+
+    public BottomDto getBottomById(Integer id, Integer userId) {
+        return bottomRepository.findByIdAndUserId(id,userId)
+                .map(bottomConverter::convertAsDto)
+                .orElseThrow(() -> new ApiException(ErrorEnum.BOTTOM_NOT_FOUND));
+    }
 }
