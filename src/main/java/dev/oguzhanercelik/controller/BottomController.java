@@ -58,4 +58,9 @@ public class BottomController {
     public void deleteImage(@PathVariable Integer bottomId) {
         bottomService.deleteImage(bottomId, IdentityUtils.getId());
     }
+
+    @DeleteMapping("/{bottomId}")
+    public void delete(@PathVariable Integer bottomId) {
+        bottomService.delete(bottomId, IdentityUtils.getId());
+    }
 }

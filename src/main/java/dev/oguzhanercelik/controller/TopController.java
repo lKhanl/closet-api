@@ -54,9 +54,13 @@ public class TopController {
         topService.uploadImage(topId, IdentityUtils.getId(), file);
     }
 
-    @DeleteMapping(value = "/{topId}/image")
+    @DeleteMapping("/{topId}/image")
     public void deleteImage(@PathVariable Integer topId) {
         topService.deleteImage(topId, IdentityUtils.getId());
     }
 
+    @DeleteMapping("/{topId}")
+    public void delete(@PathVariable Integer topId) {
+        topService.delete(topId, IdentityUtils.getId());
+    }
 }

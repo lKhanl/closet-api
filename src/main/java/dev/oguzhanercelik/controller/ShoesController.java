@@ -2,7 +2,6 @@ package dev.oguzhanercelik.controller;
 
 import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.ShoesDto;
-import dev.oguzhanercelik.model.dto.TopDto;
 import dev.oguzhanercelik.model.request.ShoesCreateRequest;
 import dev.oguzhanercelik.model.request.ShoesFilterRequest;
 import dev.oguzhanercelik.model.request.ShoesUpdateRequest;
@@ -59,6 +58,11 @@ public class ShoesController {
     @DeleteMapping(value = "/{shoesId}/image")
     public void deleteImage(@PathVariable Integer shoesId) {
         shoesService.deleteImage(shoesId, IdentityUtils.getId());
+    }
+
+    @DeleteMapping("/{shoesId}")
+    public void delete(@PathVariable Integer shoesId) {
+        shoesService.delete(shoesId, IdentityUtils.getId());
     }
 
 }

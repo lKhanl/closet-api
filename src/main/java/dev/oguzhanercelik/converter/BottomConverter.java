@@ -11,7 +11,7 @@ import java.util.Objects;
 @Component
 public class BottomConverter {
 
-    @Value("${minio.url}")
+    @Value("${minio.public.url}")
     private String baseUrl;
 
     public Bottom convertAsEntity(Integer userId, BottomCreateRequest request) {

@@ -93,8 +93,20 @@ public class ShoesService {
     }
 
     public ShoesDto getShoesById(Integer id, Integer userId) {
-        return shoesRepository.findByIdAndUserId(id,userId)
+        return shoesRepository.findByIdAndUserId(id, userId)
                 .map(shoesConverter::convertAsDto)
                 .orElseThrow(() -> new ApiException(ErrorEnum.SHOES_NOT_FOUND));
+    }
+
+    public void delete(Integer shoesId, Integer userId) {
+        final Optional<Shoes> optionalShoes = shoesRepository.findByIdAndUserId(shoesId, userId);
+        if (optionalShoes.isEmpty()) {
+            throw new ApiException(ErrorEnum.SHOES_NOT_FOUND);
+        }
+        final Shoes shoes = optionalShoes.get();
+
+        storageService.deleteFile(shoes.getPath());
+        // todo: delete combines first
+        shoesRepository.delete(shoes);
     }
 }

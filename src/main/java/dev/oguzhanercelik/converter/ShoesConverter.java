@@ -11,7 +11,7 @@ import java.util.Objects;
 @Component
 public class ShoesConverter {
 
-    @Value("${minio.url}")
+    @Value("${minio.public.url}")
     private String baseUrl;
 
     public Shoes convertAsEntity(Integer userId, ShoesCreateRequest request) {

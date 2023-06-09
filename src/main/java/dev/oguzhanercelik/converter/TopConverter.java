@@ -11,7 +11,7 @@ import java.util.Objects;
 @Component
 public class TopConverter {
 
-    @Value("${minio.url}")
+    @Value("${minio.public.url}")
     private String baseUrl;
 
     public Top convertAsEntity(Integer userId, TopCreateRequest request) {

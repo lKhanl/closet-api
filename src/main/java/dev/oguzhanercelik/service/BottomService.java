@@ -97,4 +97,16 @@ public class BottomService {
                 .map(bottomConverter::convertAsDto)
                 .orElseThrow(() -> new ApiException(ErrorEnum.BOTTOM_NOT_FOUND));
     }
+
+    public void delete(Integer bottomId, Integer userId) {
+        final Optional<Bottom> optionalBottom = bottomRepository.findByIdAndUserId(bottomId, userId);
+        if (optionalBottom.isEmpty()) {
+            throw new ApiException(ErrorEnum.BOTTOM_NOT_FOUND);
+        }
+        final Bottom bottom = optionalBottom.get();
+
+        storageService.deleteFile(bottom.getPath());
+        // todo: delete combines first
+        bottomRepository.delete(bottom);
+    }
 }

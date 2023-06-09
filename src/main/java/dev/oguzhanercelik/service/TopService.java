@@ -98,4 +98,17 @@ public class TopService {
                 .map(topConverter::convertAsDto)
                 .orElseThrow(() -> new ApiException(ErrorEnum.TOP_NOT_FOUND));
     }
+
+    @Transactional
+    public void delete(Integer topId, Integer userId) {
+        final Optional<Top> optionalTop = topRepository.findByIdAndUserId(topId, userId);
+        if (optionalTop.isEmpty()) {
+            throw new ApiException(ErrorEnum.TOP_NOT_FOUND);
+        }
+        final Top top = optionalTop.get();
+
+        storageService.deleteFile(top.getPath());
+        // todo: delete combines first
+        topRepository.delete(top);
+    }
 }
