@@ -9,4 +9,10 @@ import java.util.Optional;
 public interface CombineRepository extends PagingAndSortingRepository<Combine, Integer>, JpaSpecificationExecutor<Combine> {
     Optional<Combine> findByIdAndUserId(Integer id, Integer userId);
 
+    void deleteByUserIdAndTopId(Integer userId, Integer topId);
+
+    void deleteByUserIdAndBottomId(Integer userId, Integer bottomId);
+
+    void deleteByUserIdAndShoesId(Integer userId, Integer shoesId);
+
 }

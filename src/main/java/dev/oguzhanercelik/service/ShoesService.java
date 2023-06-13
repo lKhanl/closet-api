@@ -32,6 +32,7 @@ public class ShoesService {
     private final ShoesRepository shoesRepository;
     private final ShoesConverter shoesConverter;
     private final StorageService storageService;
+    private final CombineService combineService;
 
     public void create(Integer userId, ShoesCreateRequest request) {
         final Shoes shoes = shoesConverter.convertAsEntity(userId, request);
@@ -46,11 +47,11 @@ public class ShoesService {
                 .map(shoesConverter::convertAsDto)
                 .toList();
         return new PagingResult<>(shoesDtoList,
-                                  shoesPage.getTotalPages(),
-                                  shoesPage.getTotalElements(),
-                                  shoesPage.getSize(),
-                                  shoesPage.getNumber(),
-                                  shoesPage.isEmpty());
+                shoesPage.getTotalPages(),
+                shoesPage.getTotalElements(),
+                shoesPage.getSize(),
+                shoesPage.getNumber(),
+                shoesPage.isEmpty());
     }
 
     public void update(Integer id, Integer userId, ShoesUpdateRequest request) {
@@ -107,7 +108,7 @@ public class ShoesService {
         final Shoes shoes = optionalShoes.get();
 
         storageService.deleteFile(shoes.getPath());
-        // todo: delete combines first
+        combineService.deleteByUserIdAndShoesId(userId, shoesId);
         shoesRepository.delete(shoes);
     }
 }

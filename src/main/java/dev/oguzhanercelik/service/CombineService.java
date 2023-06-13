@@ -74,4 +74,16 @@ public class CombineService {
         final Combine combine = optionalCombine.get();
         combineRepository.delete(combine);
     }
+
+    public void deleteByUserIdAndTopId(Integer userId, Integer topId) {
+        combineRepository.deleteByUserIdAndTopId(userId, topId);
+    }
+
+    public void deleteByUserIdAndBottomId(Integer userId, Integer bottomId) {
+        combineRepository.deleteByUserIdAndBottomId(userId, bottomId);
+    }
+
+    public void deleteByUserIdAndShoesId(Integer userId, Integer shoesId) {
+        combineRepository.deleteByUserIdAndShoesId(userId, shoesId);
+    }
 }

@@ -14,7 +14,6 @@ import dev.oguzhanercelik.repository.TopRepository;
 import dev.oguzhanercelik.repository.TopSpecification;
 import dev.oguzhanercelik.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -33,6 +32,7 @@ public class TopService {
     private final TopRepository topRepository;
     private final TopConverter topConverter;
     private final StorageService storageService;
+    private final CombineService combineService;
 
     public void create(Integer userId, TopCreateRequest request) {
         final Top top = topConverter.convertAsEntity(userId, request);
@@ -47,11 +47,11 @@ public class TopService {
                 .map(topConverter::convertAsDto)
                 .toList();
         return new PagingResult<>(merchantProductDtoList,
-                                  merchantProductPage.getTotalPages(),
-                                  merchantProductPage.getTotalElements(),
-                                  merchantProductPage.getSize(),
-                                  merchantProductPage.getNumber(),
-                                  merchantProductPage.isEmpty());
+                merchantProductPage.getTotalPages(),
+                merchantProductPage.getTotalElements(),
+                merchantProductPage.getSize(),
+                merchantProductPage.getNumber(),
+                merchantProductPage.isEmpty());
     }
 
     public void update(Integer id, Integer userId, TopUpdateRequest request) {
@@ -94,7 +94,7 @@ public class TopService {
     }
 
     public TopDto getTopById(Integer id, Integer userId) {
-        return topRepository.findByIdAndUserId(id,userId)
+        return topRepository.findByIdAndUserId(id, userId)
                 .map(topConverter::convertAsDto)
                 .orElseThrow(() -> new ApiException(ErrorEnum.TOP_NOT_FOUND));
     }
@@ -108,7 +108,7 @@ public class TopService {
         final Top top = optionalTop.get();
 
         storageService.deleteFile(top.getPath());
-        // todo: delete combines first
+        combineService.deleteByUserIdAndTopId(userId, topId);
         topRepository.delete(top);
     }
 }

@@ -32,6 +32,7 @@ public class BottomService {
     private final BottomRepository bottomRepository;
     private final BottomConverter bottomConverter;
     private final StorageService storageService;
+    private final CombineService combineService;
 
     public void create(Integer userId, BottomCreateRequest request) {
         final Bottom bottom = bottomConverter.convertAsEntity(userId, request);
@@ -46,11 +47,11 @@ public class BottomService {
                 .map(bottomConverter::convertAsDto)
                 .toList();
         return new PagingResult<>(bottomDtoList,
-                                  bottomPage.getTotalPages(),
-                                  bottomPage.getTotalElements(),
-                                  bottomPage.getSize(),
-                                  bottomPage.getNumber(),
-                                  bottomPage.isEmpty());
+                bottomPage.getTotalPages(),
+                bottomPage.getTotalElements(),
+                bottomPage.getSize(),
+                bottomPage.getNumber(),
+                bottomPage.isEmpty());
     }
 
     public void update(Integer id, Integer userId, BottomUpdateRequest request) {
@@ -93,7 +94,7 @@ public class BottomService {
     }
 
     public BottomDto getBottomById(Integer id, Integer userId) {
-        return bottomRepository.findByIdAndUserId(id,userId)
+        return bottomRepository.findByIdAndUserId(id, userId)
                 .map(bottomConverter::convertAsDto)
                 .orElseThrow(() -> new ApiException(ErrorEnum.BOTTOM_NOT_FOUND));
     }
@@ -107,7 +108,7 @@ public class BottomService {
         final Bottom bottom = optionalBottom.get();
 
         storageService.deleteFile(bottom.getPath());
-        // todo: delete combines first
+        combineService.deleteByUserIdAndBottomId(userId, bottomId);
         bottomRepository.delete(bottom);
     }
 }
