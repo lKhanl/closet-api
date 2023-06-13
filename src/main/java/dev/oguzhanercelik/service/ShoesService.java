@@ -98,6 +98,7 @@ public class ShoesService {
                 .orElseThrow(() -> new ApiException(ErrorEnum.SHOES_NOT_FOUND));
     }
 
+    @Transactional
     public void delete(Integer shoesId, Integer userId) {
         final Optional<Shoes> optionalShoes = shoesRepository.findByIdAndUserId(shoesId, userId);
         if (optionalShoes.isEmpty()) {

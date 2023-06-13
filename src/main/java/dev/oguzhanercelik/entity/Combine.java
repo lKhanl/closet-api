@@ -1,23 +1,10 @@
 package dev.oguzhanercelik.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import javax.persistence.Column;
-import javax.persistence.ConstraintMode;
-import javax.persistence.Entity;
-import javax.persistence.ForeignKey;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -26,13 +13,15 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "shoes")
+@Table(name = "shoes", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"top_id", "bottom_id", "shoes_id"})
+})
 public class Combine {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -45,6 +34,9 @@ public class Combine {
 
     @Column(name = "shoes_id", nullable = false)
     private Integer shoesId;
+
+    @Column(name = "user_id", nullable = false)
+    private Integer userId;
 
     @ManyToOne
     @JoinColumn(name = "top_id", insertable = false, updatable = false, foreignKey = @ForeignKey(ConstraintMode.CONSTRAINT))

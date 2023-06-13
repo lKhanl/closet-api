@@ -18,6 +18,7 @@ public class BottomSpecification {
     public static Specification<Bottom> getFilterQuery(Integer userId, BottomFilterRequest request) {
         return (root, query, cb) -> {
             Predicate conjunction = cb.conjunction();
+            conjunction = cb.and(conjunction, cb.equal(root.get("userId"), userId));
             if (StringUtils.isNotBlank(request.getName())) {
                 conjunction = cb.and(conjunction, cb.like(cb.lower(root.get("name")), likePattern(request.getName())));
             }

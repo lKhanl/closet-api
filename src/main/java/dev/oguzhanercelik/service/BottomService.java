@@ -98,6 +98,7 @@ public class BottomService {
                 .orElseThrow(() -> new ApiException(ErrorEnum.BOTTOM_NOT_FOUND));
     }
 
+    @Transactional
     public void delete(Integer bottomId, Integer userId) {
         final Optional<Bottom> optionalBottom = bottomRepository.findByIdAndUserId(bottomId, userId);
         if (optionalBottom.isEmpty()) {
