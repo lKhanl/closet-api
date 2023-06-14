@@ -1,6 +1,5 @@
 package dev.oguzhanercelik.controller;
 
-import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.ShoesDto;
 import dev.oguzhanercelik.model.request.ShoesCreateRequest;
 import dev.oguzhanercelik.model.request.ShoesFilterRequest;
@@ -21,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/shoes")
@@ -35,8 +35,8 @@ public class ShoesController {
     }
 
     @GetMapping
-    public PagingResult<ShoesDto> getAllByFilterShoes(@Valid ShoesFilterRequest request) {
-        return shoesService.getAllByFilterShoes(IdentityUtils.getId(), request);
+    public List<ShoesDto> getAllShoes() {
+        return shoesService.getAllShoes(IdentityUtils.getId());
     }
 
     @GetMapping("/{id}")

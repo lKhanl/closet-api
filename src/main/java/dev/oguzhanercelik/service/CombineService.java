@@ -34,19 +34,11 @@ public class CombineService {
         combineRepository.save(combine);
     }
 
-    public PagingResult<CombineDto> getAllByFilterCombine(Integer id, CombineFilterRequest request) {
-        final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Combine> specification = CombineSpecification.getFilterQuery(id, request);
-        final Page<Combine> combinePage = combineRepository.findAll(specification, pageable);
-        final List<CombineDto> combineDtoList = combinePage.stream()
+    public List<CombineDto> getAllCombine(Integer id) {
+        final List<Combine> combines = combineRepository.findByUserIdOrderByIdDesc(id);
+        return combines.stream()
                 .map(combineConverter::convertAsDto)
                 .toList();
-        return new PagingResult<>(combineDtoList,
-                combinePage.getTotalPages(),
-                combinePage.getTotalElements(),
-                combinePage.getSize(),
-                combinePage.getNumber(),
-                combinePage.isEmpty());
     }
 
     public void update(Integer id, Integer userId, CombineUpdateRequest request) {

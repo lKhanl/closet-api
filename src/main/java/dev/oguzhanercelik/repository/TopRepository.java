@@ -1,6 +1,5 @@
 package dev.oguzhanercelik.repository;
 
-import dev.oguzhanercelik.entity.Bottom;
 import dev.oguzhanercelik.entity.Top;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
@@ -12,6 +11,6 @@ public interface TopRepository extends PagingAndSortingRepository<Top, Integer>,
 
     Optional<Top> findByIdAndUserId(Integer id, Integer userId);
 
-    List<Top> findByUserId(Integer userId);
+    List<Top> findByUserIdOrderByIdDesc(Integer userId);
 
 }

@@ -40,7 +40,7 @@ public class BottomService {
     }
 
     public List<BottomDto> getAllBottom(Integer id) {
-        final List<Bottom> bottoms = bottomRepository.findByUserId(id);
+        final List<Bottom> bottoms = bottomRepository.findByUserIdOrderByIdDesc(id);
         return bottoms.stream()
                 .map(bottomConverter::convertAsDto)
                 .toList();

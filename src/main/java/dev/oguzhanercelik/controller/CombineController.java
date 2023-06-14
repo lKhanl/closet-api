@@ -1,6 +1,5 @@
 package dev.oguzhanercelik.controller;
 
-import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.CombineDto;
 import dev.oguzhanercelik.model.request.CombineCreateRequest;
 import dev.oguzhanercelik.model.request.CombineFilterRequest;
@@ -11,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/combines")
@@ -25,8 +25,8 @@ public class CombineController {
     }
 
     @GetMapping
-    public PagingResult<CombineDto> getAllByFilterCombine(@Valid CombineFilterRequest request) {
-        return combineService.getAllByFilterCombine(IdentityUtils.getId(), request);
+    public List<CombineDto> getAllCombine() {
+        return combineService.getAllCombine(IdentityUtils.getId());
     }
 
 //    @GetMapping("/{id}")

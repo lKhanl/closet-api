@@ -3,20 +3,13 @@ package dev.oguzhanercelik.service;
 import dev.oguzhanercelik.converter.TopConverter;
 import dev.oguzhanercelik.entity.Top;
 import dev.oguzhanercelik.exception.ApiException;
-import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.TopDto;
 import dev.oguzhanercelik.model.enums.Path;
 import dev.oguzhanercelik.model.error.ErrorEnum;
 import dev.oguzhanercelik.model.request.TopCreateRequest;
-import dev.oguzhanercelik.model.request.TopFilterRequest;
 import dev.oguzhanercelik.model.request.TopUpdateRequest;
 import dev.oguzhanercelik.repository.TopRepository;
-import dev.oguzhanercelik.repository.TopSpecification;
-import dev.oguzhanercelik.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -40,7 +33,7 @@ public class TopService {
     }
 
     public List<TopDto> getAllTop(Integer userId) {
-        final List<Top> tops = topRepository.findByUserId(userId);
+        final List<Top> tops = topRepository.findByUserIdOrderByIdDesc(userId);
         return tops.stream()
                 .map(topConverter::convertAsDto)
                 .toList();
@@ -99,7 +92,9 @@ public class TopService {
         }
         final Top top = optionalTop.get();
 
-        storageService.deleteFile(top.getPath());
+        if (top.getPath() != null) {
+            storageService.deleteFile(top.getPath());
+        }
         combineService.deleteByUserIdAndTopId(userId, topId);
         topRepository.delete(top);
     }

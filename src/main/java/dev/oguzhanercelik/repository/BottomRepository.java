@@ -10,6 +10,6 @@ import java.util.Optional;
 public interface BottomRepository extends PagingAndSortingRepository<Bottom, Integer>, JpaSpecificationExecutor<Bottom> {
     Optional<Bottom> findByIdAndUserId(Integer id, Integer userId);
 
-    List<Bottom> findByUserId(Integer userId);
+    List<Bottom> findByUserIdOrderByIdDesc(Integer userId);
 
 }

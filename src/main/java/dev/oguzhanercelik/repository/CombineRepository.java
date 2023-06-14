@@ -4,6 +4,7 @@ import dev.oguzhanercelik.entity.Combine;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface CombineRepository extends PagingAndSortingRepository<Combine, Integer>, JpaSpecificationExecutor<Combine> {
@@ -14,5 +15,7 @@ public interface CombineRepository extends PagingAndSortingRepository<Combine, I
     void deleteByUserIdAndBottomId(Integer userId, Integer bottomId);
 
     void deleteByUserIdAndShoesId(Integer userId, Integer shoesId);
+
+    List<Combine> findByUserIdOrderByIdDesc(Integer userId);
 
 }
