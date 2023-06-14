@@ -1,9 +1,7 @@
 package dev.oguzhanercelik.controller;
 
-import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.BottomDto;
 import dev.oguzhanercelik.model.request.BottomCreateRequest;
-import dev.oguzhanercelik.model.request.BottomFilterRequest;
 import dev.oguzhanercelik.model.request.BottomUpdateRequest;
 import dev.oguzhanercelik.service.BottomService;
 import dev.oguzhanercelik.utils.IdentityUtils;
@@ -21,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/bottoms")
@@ -35,8 +34,8 @@ public class BottomController {
     }
 
     @GetMapping
-    public PagingResult<BottomDto> getAllByFilterBottom(@Valid BottomFilterRequest request) {
-        return bottomService.getAllByFilterBottom(IdentityUtils.getId(), request);
+    public List<BottomDto> getAllBottom() {
+        return bottomService.getAllBottom(IdentityUtils.getId());
     }
 
     @GetMapping("/{id}")

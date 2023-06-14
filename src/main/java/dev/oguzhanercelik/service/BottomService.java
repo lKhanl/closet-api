@@ -39,19 +39,11 @@ public class BottomService {
         bottomRepository.save(bottom);
     }
 
-    public PagingResult<BottomDto> getAllByFilterBottom(Integer id, BottomFilterRequest request) {
-        final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Bottom> specification = BottomSpecification.getFilterQuery(id, request);
-        final Page<Bottom> bottomPage = bottomRepository.findAll(specification, pageable);
-        final List<BottomDto> bottomDtoList = bottomPage.stream()
+    public List<BottomDto> getAllBottom(Integer id) {
+        final List<Bottom> bottoms = bottomRepository.findByUserId(id);
+        return bottoms.stream()
                 .map(bottomConverter::convertAsDto)
                 .toList();
-        return new PagingResult<>(bottomDtoList,
-                bottomPage.getTotalPages(),
-                bottomPage.getTotalElements(),
-                bottomPage.getSize(),
-                bottomPage.getNumber(),
-                bottomPage.isEmpty());
     }
 
     public void update(Integer id, Integer userId, BottomUpdateRequest request) {

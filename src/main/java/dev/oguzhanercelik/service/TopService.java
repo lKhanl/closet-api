@@ -39,19 +39,11 @@ public class TopService {
         topRepository.save(top);
     }
 
-    public PagingResult<TopDto> getAllByFilterTop(Integer userId, TopFilterRequest request) {
-        final Pageable pageable = PaginationUtils.getPageable(request.getPage(), request.getSize(), request.getDirection(), request.getSortField());
-        final Specification<Top> specification = TopSpecification.getFilterQuery(userId, request);
-        final Page<Top> merchantProductPage = topRepository.findAll(specification, pageable);
-        final List<TopDto> merchantProductDtoList = merchantProductPage.stream()
+    public List<TopDto> getAllTop(Integer userId) {
+        final List<Top> tops = topRepository.findByUserId(userId);
+        return tops.stream()
                 .map(topConverter::convertAsDto)
                 .toList();
-        return new PagingResult<>(merchantProductDtoList,
-                merchantProductPage.getTotalPages(),
-                merchantProductPage.getTotalElements(),
-                merchantProductPage.getSize(),
-                merchantProductPage.getNumber(),
-                merchantProductPage.isEmpty());
     }
 
     public void update(Integer id, Integer userId, TopUpdateRequest request) {
