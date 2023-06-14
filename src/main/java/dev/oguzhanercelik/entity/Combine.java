@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "shoes", uniqueConstraints = {
+@Table(name = "combine", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"top_id", "bottom_id", "shoes_id"})
 })
 public class Combine {

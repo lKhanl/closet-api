@@ -92,7 +92,9 @@ public class ShoesService {
         }
         final Shoes shoes = optionalShoes.get();
 
-        storageService.deleteFile(shoes.getPath());
+        if (shoes.getPath() != null) {
+            storageService.deleteFile(shoes.getPath());
+        }
         combineService.deleteByUserIdAndShoesId(userId, shoesId);
         shoesRepository.delete(shoes);
     }

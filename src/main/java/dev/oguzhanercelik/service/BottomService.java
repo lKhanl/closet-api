@@ -3,20 +3,13 @@ package dev.oguzhanercelik.service;
 import dev.oguzhanercelik.converter.BottomConverter;
 import dev.oguzhanercelik.entity.Bottom;
 import dev.oguzhanercelik.exception.ApiException;
-import dev.oguzhanercelik.model.PagingResult;
 import dev.oguzhanercelik.model.dto.BottomDto;
 import dev.oguzhanercelik.model.enums.Path;
 import dev.oguzhanercelik.model.error.ErrorEnum;
 import dev.oguzhanercelik.model.request.BottomCreateRequest;
-import dev.oguzhanercelik.model.request.BottomFilterRequest;
 import dev.oguzhanercelik.model.request.BottomUpdateRequest;
 import dev.oguzhanercelik.repository.BottomRepository;
-import dev.oguzhanercelik.repository.BottomSpecification;
-import dev.oguzhanercelik.utils.PaginationUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -99,7 +92,9 @@ public class BottomService {
         }
         final Bottom bottom = optionalBottom.get();
 
-        storageService.deleteFile(bottom.getPath());
+        if (bottom.getPath() != null) {
+            storageService.deleteFile(bottom.getPath());
+        }
         combineService.deleteByUserIdAndBottomId(userId, bottomId);
         bottomRepository.delete(bottom);
     }
