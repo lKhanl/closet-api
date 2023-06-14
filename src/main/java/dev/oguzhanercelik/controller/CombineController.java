@@ -29,10 +29,10 @@ public class CombineController {
         return combineService.getAllCombine(IdentityUtils.getId());
     }
 
-//    @GetMapping("/{id}")
-//    public TopDto getTopById(@PathVariable Integer id) {
-//        return combineService.getTopById(id, IdentityUtils.getId());
-//    }
+    @GetMapping("/randomize")
+    public CombineDto randomize() {
+        return combineService.randomize(IdentityUtils.getId());
+    }
 
     @PutMapping("/{combineId}")
     public void updateCombine(@RequestBody @Valid CombineUpdateRequest request, @PathVariable Integer combineId) {

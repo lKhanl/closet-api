@@ -19,6 +19,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -77,5 +78,11 @@ public class CombineService {
 
     public void deleteByUserIdAndShoesId(Integer userId, Integer shoesId) {
         combineRepository.deleteByUserIdAndShoesId(userId, shoesId);
+    }
+
+    public CombineDto randomize(Integer id) {
+        final List<Combine> combines = combineRepository.findByUserIdOrderByIdDesc(id);
+        Collections.shuffle(combines);
+        return combineConverter.convertAsDto(combines.get(0));
     }
 }
